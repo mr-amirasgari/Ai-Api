@@ -1,0 +1,7 @@
+openai
+langchain
+langchain-openai
+gradio
+requests
+cohere
+python-dotenv

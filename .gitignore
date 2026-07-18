@@ -1,0 +1,12 @@
+.env
+.venv/
+venv/
+__pycache__/
+.ipynb_checkpoints/
+*.py[cod]
+outputs/
+speech.mp3
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

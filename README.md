@@ -1,264 +1,189 @@
-# 🚀 مجموعه پروژه‌های کار با مدل‌های هوش مصنوعی (OpenAI / AvalAI / OpenRouter / Cohere)
+<div align="center">
 
-این ریپازیتوری شامل نمونه‌کدهای متنوع برای کار با مدل‌های هوش مصنوعی در محیط **Python** و **Jupyter Notebook** است.
-پروژه‌ها شامل چت متنی، تحلیل تصویر، تولید تصویر، تبدیل متن به گفتار (TTS)، استفاده از LangChain، ساخت رابط کاربری با Gradio و کار با APIهای مختلف می‌باشد.
+# AI API Examples
+
+A practical Jupyter Notebook collection for experimenting with text, image, audio, and multimodal AI APIs in Python.
+
+![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
+![Gradio](https://img.shields.io/badge/Gradio-Web%20Demos-FF7C00?style=for-the-badge)
+![API Keys](https://img.shields.io/badge/API%20Keys-Environment%20Variables-2EA44F?style=for-the-badge)
+
+</div>
 
 ---
 
-## 📦 پیش‌نیازها
+## Overview
 
-* Python 3.9+
-* نصب کتابخانه‌های موردنیاز:
+This repository contains independent educational examples for working with several AI APIs and Python libraries.
+
+The notebook demonstrates:
+
+- Streaming text generation
+- Terminal-based chat
+- Listing available models
+- Text-to-speech
+- Speech-to-text
+- Image generation
+- Multimodal image analysis
+- Gradio web interfaces
+- LangChain integrations
+- Cohere examples
+- OpenRouter examples
+
+> The notebook sections are independent examples. They are not intended to be executed from top to bottom as one application.
+
+## Repository Structure
+
+```text
+ai-api-examples/
+├── .env.example
+├── .gitignore
+├── ai_api_examples.ipynb
+├── README.md
+└── requirements.txt
+```
+
+## Open in Google Colab
+
+[Open the notebook in Google Colab](https://colab.research.google.com/github/mr-amirasgari/ai-api-examples/blob/main/ai_api_examples.ipynb)
+
+## Installation
+
+Clone the repository:
 
 ```bash
-pip install -U openai
-pip install -U langchain_openai
-pip install gradio
-pip install requests
-pip install cohere
+git clone https://github.com/mr-amirasgari/ai-api-examples.git
+cd ai-api-examples
 ```
 
----
+Create a virtual environment:
 
-## 🔑 تنظیم API Key
+```bash
+python -m venv .venv
+```
 
-در تمامی فایل‌ها مقدار API Key باید جایگزین شود:
+Activate it on Windows:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+Activate it on macOS or Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+Install dependencies:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Start Jupyter:
+
+```bash
+jupyter notebook
+```
+
+Then open:
+
+```text
+ai_api_examples.ipynb
+```
+
+## API Key Configuration
+
+Copy the example environment file:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+On macOS or Linux:
+
+```bash
+cp .env.example .env
+```
+
+Add only the keys required for the examples you plan to run:
+
+```env
+OPENAI_API_KEY=your_openai_api_key
+AVALAI_API_KEY=your_avalai_api_key
+OPENROUTER_API_KEY=your_openrouter_api_key
+COHERE_API_KEY=your_cohere_api_key
+```
+
+The notebook loads these values using `python-dotenv`:
 
 ```python
-api_key="YOUR_API_KEY"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+api_key = os.getenv("OPENAI_API_KEY")
 ```
 
-در صورت استفاده از AvalAI:
-
-```python
-base_url="https://api.avalai.ir/v1"
-```
-
-در صورت استفاده از OpenRouter:
-
-```python
-base_url="https://openrouter.ai/api/v1"
-```
-
----
-
-# 🧠 بخش‌های موجود در پروژه
-
----
-
-## 1️⃣ چت ساده با استریم پاسخ
-
-استفاده از مدل `gpt-4.1-mini` با قابلیت دریافت پاسخ به‌صورت Stream.
-
-ویژگی‌ها:
-
-* دریافت پاسخ به‌صورت تدریجی
-* مناسب برای ساخت چت‌بات‌های بلادرنگ
-
----
-
-## 2️⃣ چت تعاملی در ترمینال
-
-پیاده‌سازی یک حلقه چت ساده که:
-
-* پیام کاربر را دریافت می‌کند
-* پاسخ مدل را چاپ می‌کند
-* تاریخچه مکالمه را ذخیره می‌کند
-* با دستور `exit` یا `quit` متوقف می‌شود
-
-مدل استفاده‌شده:
-
-```
-gpt-3.5-turbo
-```
-
----
-
-## 3️⃣ دریافت لیست مدل‌ها از API
-
-با استفاده از `requests` لیست مدل‌های فعال دریافت می‌شود:
-
-```python
-GET https://api.avalai.ir/v1/models
-```
-
----
-
-## 4️⃣ تبدیل متن به گفتار (Text-to-Speech)
-
-استفاده از مدل:
-
-```
-tts-1
-```
-
-خروجی:
-
-* فایل MP3 تولید شده
-* ذخیره خودکار روی سیستم
-
-کاربرد:
-
-* ساخت اپلیکیشن‌های صوتی
-* تولید پادکست خودکار
-* دستیار صوتی
-
----
-
-## 5️⃣ تولید تصویر با DALL·E
-
-استفاده از مدل:
-
-```
-dall-e-3
-```
-
-پارامترها:
-
-* سایز تصویر (1024x1024)
-* کیفیت
-* تعداد تصاویر
-
-خروجی:
-
-* دریافت URL تصویر تولیدشده
-
----
-
-## 6️⃣ تحلیل تصویر با LangChain (ورودی Base64)
-
-ویژگی‌ها:
-
-* خواندن فایل تصویر
-* تبدیل به Base64
-* ارسال به مدل `gpt-4o`
-* دریافت توضیح فارسی درباره تصویر
-
-در صورت نبود تصویر:
-
-* ارسال درخواست متنی به مدل
-
----
-
-## 7️⃣ ساخت رابط گرافیکی تحلیل تصویر با Gradio
-
-قابلیت‌ها:
-
-* آپلود تصویر
-* تبدیل خودکار به Base64
-* ارسال به مدل
-* نمایش توضیح فارسی
-
-مناسب برای:
-
-* ساخت ابزار تحت وب
-* پروژه‌های دانشگاهی
-* دمو محصول
-
----
-
-## 8️⃣ استفاده از مدل Cohere
-
-مدل استفاده‌شده:
-
-```
-command-r-plus-08-2024
-```
-
-نمونه استفاده از Chat API برای تولید متن.
-
----
-
-## 9️⃣ استفاده از OpenRouter
-
-مدل نمونه:
-
-```
-openai/gpt-oss-120b:free
-```
-
-قابلیت:
-
-* ارسال متن + تصویر
-* دریافت پاسخ چندرسانه‌ای
-
----
-
-## 🔟 تبدیل متن به گفتار با رابط Gradio
-
-ویژگی‌ها:
-
-* ورودی متن
-* تولید فایل صوتی
-* پخش مستقیم در مرورگر
-* دانلود فایل
-
----
-
-## 1️⃣1️⃣ ساخت چت‌بات تحت وب با Gradio + LangChain
-
-ویژگی‌ها:
-
-* چت گرافیکی
-* ذخیره تاریخچه مکالمه
-* امکان تغییر مدل
-* تولید پاسخ خلاقانه فارسی
-
-مدل پیش‌فرض:
-
-```
-gpt-4o
-```
-
----
-
-# 🏗 ساختار پیشنهادی پروژه
-
-```
-.
-├── chat_stream.py
-├── chat_terminal.py
-├── image_analysis.py
-├── gradio_image_app.py
-├── tts_app.py
-├── dalle_generate.py
-├── cohere_chat.py
-├── openrouter_example.py
-└── README.md
-```
-
----
-
-# 🎯 کاربردهای آموزشی
-
-این مجموعه برای موارد زیر بسیار مناسب است:
-
-* آموزش کار با API مدل‌های زبانی
-* یادگیری پردازش تصویر با مدل‌های چندوجهی
-* ساخت چت‌بات حرفه‌ای
-* طراحی اپلیکیشن‌های مبتنی بر هوش مصنوعی
-* پیاده‌سازی پروژه‌های عملی برای رزومه
-
----
-
-# ⚠️ نکات مهم
-
-* هرگز API Key خود را در GitHub عمومی منتشر نکنید.
-* برای پروژه‌های واقعی از فایل `.env` استفاده کنید.
-* در صورت استفاده تجاری حتماً شرایط سرویس‌دهنده API را مطالعه کنید.
-
----
-
-# 📜 لایسنس
-
-این پروژه صرفاً برای اهداف آموزشی تهیه شده است.
-
----
-
-# ✨ نویسنده
-
-تهیه‌شده برای یادگیری و توسعه پروژه‌های هوش مصنوعی با استفاده از مدل‌های مدرن زبانی.
-
----
-
-اگر این پروژه برایتان مفید بود ⭐️ بدهید و آن را با دیگران به اشتراک بگذارید.
+> Never commit the `.env` file or real API keys to GitHub.
+
+## Examples Included
+
+| Section | Main Library or Provider | Purpose |
+|---|---|---|
+| Streaming chat | OpenAI Python SDK | Display generated text incrementally |
+| Terminal chatbot | OpenAI Python SDK | Maintain a simple conversation history |
+| Model listing | Requests | Retrieve models from an API endpoint |
+| Text-to-speech | OpenAI-compatible API | Generate an audio file from text |
+| Speech-to-text | OpenAI-compatible API | Transcribe an audio file |
+| Image generation | OpenAI-compatible API | Generate images from prompts |
+| Image analysis | LangChain | Send text and Base64 images to a multimodal model |
+| Image-analysis UI | Gradio and LangChain | Build a simple browser interface |
+| Cohere chat | Cohere SDK | Generate text using Cohere |
+| OpenRouter example | OpenAI Python SDK | Access an OpenAI-compatible third-party endpoint |
+| TTS interface | Gradio | Generate and play speech in a browser |
+| Chat interface | Gradio and LangChain | Build a simple web chatbot |
+
+## Usage Notes
+
+1. Run only the cells related to the example you want to test.
+2. Confirm that the required API key is available in `.env`.
+3. Confirm that the selected model is supported by your provider.
+4. Some examples create local output files such as MP3 files.
+5. API usage may involve provider charges or rate limits.
+
+## Security
+
+This repository follows these basic practices:
+
+- API keys are read from environment variables.
+- `.env` is excluded through `.gitignore`.
+- Notebook outputs and execution counts are cleared before publication.
+- Generated audio and local output folders are ignored.
+
+## Important Limitations
+
+- Model names and provider availability can change.
+- OpenAI-compatible providers may not support every OpenAI feature.
+- Some notebook examples require local images or audio files.
+- Error handling is intentionally minimal because the repository is educational.
+- Review provider documentation, pricing, and data policies before production use.
+
+## Possible Improvements
+
+- Split each example into a separate notebook
+- Add automated notebook validation
+- Add structured error handling
+- Add provider-specific configuration helpers
+- Add reusable utility functions
+- Add examples for asynchronous requests
+- Add tests with mocked API responses
+
+## Author
+
+**Amir Mohammad Asgari**
+
+[GitHub Profile](https://github.com/mr-amirasgari)  
+[Official Website](https://www.am-asgari.ir/)
